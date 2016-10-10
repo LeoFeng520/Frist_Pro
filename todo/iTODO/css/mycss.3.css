@@ -1,0 +1,33 @@
+
+.cblue {
+	background-color: #3A87AD;
+}
+
+.cgreen {
+	background-color: #468847;
+}
+
+.cyellow {
+	background-color: #C09853;
+}
+
+.cred {
+	background-color: #B94A48;
+}
+.color-0{
+    background-color:#D9EDF6;
+    color:#3A87AD;
+/*    color:#D9EDF6;*/
+}
+.color-1{
+    background-color: #DEF0D8;
+    color: #468847;
+}
+.color-2{
+    background-color:#FDF8E4;
+    color:#C09853;
+}
+.color-3{
+    background-color:#F2DEDE;
+    color:#B94A48;
+}

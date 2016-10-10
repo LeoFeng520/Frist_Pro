@@ -1,0 +1,119 @@
+html,body{
+	width:100%;
+	background: url(../img/bg.png);
+}
+.container-fluid{
+	width: 100%;
+	max-width: 800px;
+}
+#title {
+	font-size: 36px;
+	float: left;
+}
+.topper{
+	overflow: hidden;
+	border-radius: 5px 5px 0 0;
+}
+.topper>div {
+	float: left;
+	height: 14px;
+	width: 25%;
+	cursor: pointer;
+	
+}
+
+
+#delete{
+	cursor:pointer ;
+}
+.well {
+   
+    min-height:50px;
+        padding: 3px 13px 7px;
+    border-radius: 0px 0px 5px 5px;
+}
+
+.ck-true{
+	text-decoration: line-through;
+}
+.ck-false{
+	text-decoration: none;
+}
+button{
+	border: none;
+	background-color: none;
+	box-shadow: none;
+}
+.warning{
+	display: inline-block;
+   background-color: #D9534F;
+   width: 19px;
+   height: 19px;
+   padding:0 2px 0 5px;
+   border-radius: 3px;
+   	  color:white;
+	font-weight: bold; 
+ 
+}
+
+.ck{
+	margin-top: 8px;
+}
+#ck1{
+	float: left;
+	
+}
+#ck2{
+	float:left;
+}
+#ck3{
+	float:right;
+}
+#group{
+	margin-top: 35px;
+}
+#main{
+	margin-top: 10px;
+}
+.work{
+	/*color:#a94442;*/
+	font-size: 13px;
+    margin-top: 18px;
+    overflow: hidden;
+}
+
+.work input[type=checkbox]{
+	float: left;
+	margin: 2px 5px 0 0;
+}
+input[type=checkbox]{
+	cursor: pointer;
+}
+.inner{
+	float: left;
+	word-wrap: break-word;
+}
+
+#time{
+	float: right;
+}
+
+.work span{
+	color: darkgray;
+}
+ul{
+	padding: 0;margin: 0;
+}
+ul li{
+	list-style: none;
+}
+.glyphicon-remove:before{
+	    margin-left: 10px;
+}
+#colorstyle{
+	float:right;
+	margin-top: 14px;
+}
+#header{
+	height: 61px;
+}

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html ng-app="myApp" ng-controller="myCtrl">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>todo</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/mycss.css" />
+		<link rel="stylesheet" type="text/css" href="css/mycss.{{selcolor}}.css" />
+	</head>
+
+	<body>
+		<div class="container-fluid">   
+			<div class="row">
+				<div class="col-xs-12 col-sm-2 col-md-2"></div>
+				<div class="col-xs-12 col-sm-8 col-md-8">
+					<div id="header">
+						<p id="title">Todo List</p>
+						<div class="btn-group" id="colorstyle">
+							<select ng-model="selcolor" ng-init="selcolor='0'">
+								<option value="0">柔和</option>
+								<option value="1">灰黑</option>
+								<option value="2">活力</option>
+								<option value="3">缤纷</option>
+							</select>
+						</div>
+					</div>
+					<form ng-submit="addDate()">
+						<input type="text" ng-model="txt" class="form-control" placeholder="input something to do...">
+
+						<div class="ck">
+							<div id="ck1"><input type="checkbox" ng-model="ischeckAll" ng-click="selectAll(datas)" />&nbsp;&nbsp;</div>
+							<div id="ck2"><span>标记所有为已解决</span></div>
+						</div>
+						<input type="submit" name="" id="ck3" class="btn btn-info btn-xs" value="发布" />
+					</form>
+					<div id="group">
+						<div class="btn-group btn-group-xs" role="group" aria-label="...">
+							<button ng-click="col='word';desc=!desc" type="button" class="btn btn-default">内容</button>
+							<button ng-click="col='time';desc=!desc" type="button" class="btn btn-default">时间</button>
+							<button ng-click="col='color';desc=!desc" type="button" class="btn btn-default">权重</button>
+							<button ng-click="col='list';desc=!desc" type=" button" class="btn btn-default">默认</button>
+						</div>
+						<div class="btn-group btn-group-xs" role="group" aria-label="...">
+							
+							<button type="button" class="btn btn-default" ng-click="oswitch='true'">已完成</button>
+							<button type="button" class="btn btn-default" ng-click="oswitch='false'">未完成</button>
+							<button type="button" class="btn btn-default" ng-click="oswitch=''">全部</button>
+						
+						</div>
+					</div>
+
+					<ul>
+						<li ng-repeat="inner in datas | orderBy:col:desc | filter:{'ck':oswitch}">
+							<div id="main">
+								<div class="topper">
+									<div class="cblue" ng-click="cchange(0,inner)"></div>
+									<div class="cgreen" ng-click="cchange(1,inner)"></div>
+									<div class="cyellow" ng-click="cchange(2,inner)"></div>
+									<div class="cred" ng-click="cchange(3,inner)"></div>
+								</div>
+
+								<div class="well color-{{inner.color}}">
+									<form class="work">
+										<p class="inner ck-{{inner.ck}}"><input type="checkbox" class="checkbox" ng-model="inner.ck" ng-click="sum(inner)" />{{inner.word}}</p>
+										<p class="inner" id="time">{{inner.time}}<span class="glyphicon glyphicon-remove" id="delete" ng-click="delDate(inner)"></span></p>
+									</form>
+
+								</div>
+							</div>
+						</li>
+					</ul>
+					<div>
+						<div><span class="warning">{{count}}</span>
+							<span> 项未完成</span>
+						</div>
+
+					</div>
+				</div>
+				<div class="clearfix visible-xs-block"></div>
+				<div class="col-xs-12 col-sm-2 col-md-2"></div>
+			</div>
+		</div><br /><br />
+		 <script src="js/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	    
+		<script src="js/angular.js" type="text/javascript" charset="utf-8"></script>
+		
+		<script type="text/javascript">  
+			var app = angular.module("myApp", []);
+			app.controller("myCtrl", function($scope) {
+				$scope.datas = [];
+				$scope.datas = loadData();
+
+				$scope.addDate = function() {
+					var date = new Date();
+
+					var data = {
+						word: $scope.txt, 
+						time: date.toLocaleString(), 
+						ck: false,
+						color:$scope.rndNum(0,3),  
+						index: date.getTime(),
+					};
+					saveData(data);
+					$scope.datas.push(data); 
+					$scope.txt = "";
+					$scope.oswitch = "";
+					$scope.sum();
+				};
+				$scope.delDate = function(data) {
+					var index = $scope.datas.indexOf(data);
+					$scope.datas.splice(index, 1);
+					$scope.sum(); 
+					deleData(data.index)
+				}
+				$scope.rndNum = function (min,max){
+				return Math.floor(Math.random()*(max-min+1)+min);
+				}
+				$scope.cchange = function(a,inner)
+				{
+					inner.color = a;
+					saveData(inner);
+				}
+				$scope.sum = function(inner) {
+					$scope.count = 0;
+					for(var i = 0; i < $scope.datas.length; i++) {
+						if($scope.datas[i].ck == false) {
+							$scope.count++;
+						}
+					}
+					inner && saveData(inner);
+				}
+				$scope.ischeckAll = false;
+				$scope.selectAll = function(datas) {
+					if($scope.ischeckAll) {
+						for(var i = 0; i < $scope.datas.length; i++) {
+							$scope.datas[i].ck = true;
+						}
+					} else {
+						for(var i = 0; i < $scope.datas.length; i++) {
+							$scope.datas[i].ck = false;
+						}
+					}
+					$scope.sum();
+					datas && saveData(datas);
+				}
+				$scope.sum();
+				$scope.oswitch = "";
+//				$scope.selcolor = 0;
+			})
+			function saveData(data){
+				delete data["$$hashKey"];
+				var ss = JSON.stringify(data);            
+				localStorage.setItem(data.index,ss);                
+			}
+			function loadData(){
+				var datas = [];
+				var len = localStorage.length;
+				for (var i = 0;i<len;i++) {
+					var x = localStorage.key(i);
+					var data = localStorage.getItem(x);
+					var obj = JSON.parse(data);
+					datas.push(obj);
+				}
+				return datas;
+			}
+			function deleData(index){
+				localStorage.removeItem(index);
+			}
+		</script>
+	</body>
+</html>
